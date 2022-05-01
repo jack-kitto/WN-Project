@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "area1" ALTER COLUMN "time" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "area2" ALTER COLUMN "time" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "area3" ALTER COLUMN "time" SET DATA TYPE TEXT;

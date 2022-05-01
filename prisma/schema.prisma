@@ -10,25 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Direction {
-  Entering
-  Leaving
-}
-
 model area1 {
   id Int @id @default(autoincrement())
-  time Int 
-  direction Direction
+  epochTime Int 
+  humanTime String 
 }
 
 model area2 {
   id Int @id @default(autoincrement())
-  time Int 
-  direction Direction
+  epochTime Int 
+  humanTime String 
 }
 
 model area3 {
   id Int @id @default(autoincrement())
-  time Int 
-  direction Direction
+  epochTime Int 
+  humanTime String 
 }

@@ -1,4 +1,4 @@
-# Jamison Carpark IOT Sensor Backend
+# Jamison Carpark IOT Sensor Dashboard
 
 This folder contains the following directories:
 <!-- - [Controllers Folder](./controllers/)
