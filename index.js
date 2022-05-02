@@ -1,14 +1,15 @@
 // Deps
-const { PrismaClient } = require('@prisma/client')
 const express = require('express')
 const morgan = require('morgan')
 const {WebSocketServer} = require('ws')
-const prisma = new PrismaClient()
-const app = express()
 const cors = require('cors')
 const path = require('path')
+var sqlite3 = require('sqlite3');
 
-// Variables
+// Globals
+const app = express()
+var db = new sqlite3.Database('main.db');
+const {v4 : uuidv4} = require('uuid')
 const port = 3001
 const router = express.Router()
 const controller = express.Router()
@@ -16,7 +17,7 @@ const controller = express.Router()
 // Config
 app.set('query parser', true);
 
-///////////////////////////////////k//////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 // Middleware 
 /////////////////////////////////////////////////////////////////////
 
@@ -49,57 +50,43 @@ app.use('/area', controller)
 
       controller.route('/create').get((req, res) => {
 
-        let area
-        let areaName
-
         sendMessage("ping")
 
-        switch (parseInt(req.query.area)) {
-          case 1:
-            areaName = "Area 1"
-            area = prisma.area1
-            break;
-          case 2:
-            areaName = "Area 2"
-            area = prisma.area2
-            break;
-          case 3:
-            areaName = "Area 3"
-            area = prisma.area3
-            break;
-        }
         date = new Date(req.query.time*1000)
-        area.create({
-          data: {
-            humanTime: date.toLocaleString(),
-            epochTime: parseInt(req.query.time)
-          }
-        }).then(result => res.send({"Area": areaName, "message": "success", "data": result}))
-        .catch(err => res.send({"Area": areaName, "message": "error", "data": err}))
+        const newId = uuidv4()
+        let data = {
+          area: parseInt(req.query.area),
+          id: newId,
+          epochTime: parseInt(req.query.time), 
+          humanTime: date.toLocaleString()
+        }
+
+        db.run(`INSERT INTO area`+data.area+`(id, epochTime,humanTime)
+                    VALUES('`+data.id+`','`+data.epochTime+`','`+data.humanTime+`')`
+                    , (err) => {
+              if (err) 
+              {
+                res.send({"message":"err", "data": err})
+              }else
+              {
+                res.send({"message": "success", "data": data})
+              }
+         });
       })
   /////////////////////////////////////////////////////////////////////
   // /get
   /////////////////////////////////////////////////////////////////////
 
       controller.route('/get').get((req, res) => {
-        let area
-        let areaName
-        switch (parseInt(req.query.area)) {
-          case 1:
-            area = prisma.area1
-            areaName = "1"
-            break;
-          case 2:
-            area = prisma.area2
-            areaName = "2"
-            break;
-          case 3:
-            area = prisma.area3
-            areaName = "3"
-            break;
-        }
-        area.findMany({}).then(result => res.send({"Area": areaName, "message": "success", "data": result}))
-        .catch(err => res.send({"Area": areaName, "message": "error", "data": err}))
+        db.all("SELECT * FROM area" + req.query.area, (error, rows) => {
+          if(error) 
+          {
+            res.send({"message":"error", "data": error})
+          }else
+          {
+            res.send({"message":"success", "data": rows})
+          }
+        });
       })
 
   /////////////////////////////////////////////////////////////////////
@@ -107,25 +94,15 @@ app.use('/area', controller)
   /////////////////////////////////////////////////////////////////////
 
       controller.route('/nuke').get((req, res) => {
-        let area
-        let areaName
-        sendMessage("ping")
-        switch (parseInt(req.query.area)) {
-          case 1:
-            area = prisma.area1
-            areaName = "1"
-            break;
-          case 2:
-            area = prisma.area2
-            areaName = "2"
-            break;
-          case 3:
-            area = prisma.area3
-            areaName = "3"
-            break;
-        }
-        area.deleteMany({}).then(result => res.send({"Area": areaName, "message": "success", "data": result}))
-        .catch(err => res.send({"Area": areaName, "message": "error", "data": err}))
+        db.run(`DELETE FROM area`+req.query.area, (err) => {
+              if (err) 
+              {
+                res.send({"message":"err", "data": err})
+              }else
+              {
+                res.send({"message": "success"})
+              }
+         });
       })
 /////////////////////////////////////////////////////////////////////
 
