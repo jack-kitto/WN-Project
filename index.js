@@ -6,6 +6,7 @@ const {WebSocketServer} = require('ws')
 const prisma = new PrismaClient()
 const app = express()
 const cors = require('cors')
+const path = require('path')
 
 // Variables
 const port = 3001
@@ -22,6 +23,7 @@ app.set('query parser', true);
 app.use(express.static('public'))
 app.use(express.json())
 app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname, './client/build')));
 app.use(cors())
 
 ///////////////////////////////////k//////////////////////////////////
@@ -130,6 +132,9 @@ app.use('/area', controller)
 //////////////////////////////////////////////////////////////////////
 // Express server listener
 //////////////////////////////////////////////////////////////////////
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
