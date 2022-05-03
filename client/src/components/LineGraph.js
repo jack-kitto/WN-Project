@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -18,6 +18,8 @@ const styles = {
 }
 
 export default function LineGraph(props) {
+
+  
   return (
     <LineChart
       style={styles}

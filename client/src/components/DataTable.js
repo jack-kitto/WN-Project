@@ -21,6 +21,7 @@ export default function DataTable(props) {
               <TableCell align='right'>ID</TableCell>
               <TableCell align="right">Epoch Time</TableCell>
               <TableCell align="right">Human Time</TableCell>
+              <TableCell align="right">Direction</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -32,6 +33,7 @@ export default function DataTable(props) {
                 <TableCell align="right">{row.id}</TableCell>
                 <TableCell align="right">{row.epochTime}</TableCell>
                 <TableCell align="right">{row.humanTime}</TableCell>
+                <TableCell align="right">{row.direction}</TableCell>
               </TableRow>
             ))}
           </TableBody>

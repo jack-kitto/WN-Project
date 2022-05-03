@@ -1,13 +1,37 @@
+CREATE TABLE area1Entries(
+    "id" TEXT NOT NULL,
+    "epochTime" INTEGER NOT NULL,
+    "humanTime" TEXT NOT NULL
+);
+
+CREATE TABLE area1Exits(
+    "id" TEXT NOT NULL,
+    "epochTime" INTEGER NOT NULL,
+    "humanTime" TEXT NOT NULL
+);
+
+CREATE TABLE area2Entries(
+    "id" TEXT NOT NULL,
+    "epochTime" INTEGER NOT NULL,
+    "humanTime" TEXT NOT NULL
+);
+
+CREATE TABLE area2Exits(
+    "id" TEXT NOT NULL,
+    "epochTime" INTEGER NOT NULL,
+    "humanTime" TEXT NOT NULL
+);
+
 CREATE TABLE area1(
     "id" TEXT NOT NULL,
     "epochTime" INTEGER NOT NULL,
     "humanTime" TEXT NOT NULL,
-    "direction" INTEGER NOT NULL
+    "count" INTEGER NOT NULL
 );
 
 CREATE TABLE area2(
     "id" TEXT NOT NULL,
     "epochTime" INTEGER NOT NULL,
     "humanTime" TEXT NOT NULL,
-    "direction" INTEGER NOT NULL
+    "count" INTEGER NOT NULL
 );

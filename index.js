@@ -55,13 +55,14 @@ app.use('/area', controller)
         date = new Date(req.query.time*1000)
         const newId = uuidv4()
         let data = {
-          area: parseInt(req.query.area),
+          area: req.query.area,
           id: newId,
           epochTime: parseInt(req.query.time), 
-          humanTime: date.toLocaleString()
+          humanTime: date.toLocaleString(),
+          direction: req.query.direction,
         }
 
-        db.run(`INSERT INTO area`+data.area+`(id, epochTime,humanTime)
+        db.run(`INSERT INTO `+data.area+`(id, epochTime,humanTime)
                     VALUES('`+data.id+`','`+data.epochTime+`','`+data.humanTime+`')`
                     , (err) => {
               if (err) 
@@ -78,7 +79,7 @@ app.use('/area', controller)
   /////////////////////////////////////////////////////////////////////
 
       controller.route('/get').get((req, res) => {
-        db.all("SELECT * FROM area" + req.query.area, (error, rows) => {
+        db.all("SELECT * FROM " + req.query.area, (error, rows) => {
           if(error) 
           {
             res.send({"message":"error", "data": error})
@@ -94,7 +95,7 @@ app.use('/area', controller)
   /////////////////////////////////////////////////////////////////////
 
       controller.route('/nuke').get((req, res) => {
-        db.run(`DELETE FROM area`+req.query.area, (err) => {
+        db.run(`DELETE FROM `+req.query.area, (err) => {
               if (err) 
               {
                 res.send({"message":"err", "data": err})
