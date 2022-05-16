@@ -7,10 +7,10 @@ import Box from '@mui/material/Box';
 import DataTable from './DataTable';
 import BasicCard from './BasicCard';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-const client = new W3CWebSocket('ws://192.168.82.164:3003');
+const client = new W3CWebSocket('ws://192.168.64.164:3003');
 
 
-const baseUrl = 'http://192.168.82.164:3001/area'
+const baseUrl = 'http://192.168.64.164:3001/area'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
