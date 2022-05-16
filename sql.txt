@@ -21,17 +21,3 @@ CREATE TABLE area2Exits(
     "epochTime" INTEGER NOT NULL,
     "humanTime" TEXT NOT NULL
 );
-
-CREATE TABLE area1(
-    "id" TEXT NOT NULL,
-    "epochTime" INTEGER NOT NULL,
-    "humanTime" TEXT NOT NULL,
-    "count" INTEGER NOT NULL
-);
-
-CREATE TABLE area2(
-    "id" TEXT NOT NULL,
-    "epochTime" INTEGER NOT NULL,
-    "humanTime" TEXT NOT NULL,
-    "count" INTEGER NOT NULL
-);
